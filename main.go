@@ -16,20 +16,19 @@ func main() {
 	db.DropTable(&User{})
 	db.CreateTable(&User{})
 
-	for _, field := range db.NewScope(&User{}).Fields() {
-		println(field.Name)
-	}
+	db.Model(&User{}).AddIndex("idx_first_name", "first_name")
+	db.Model(&User{}).AddUniqueIndex("idx_last_name", "last_name")
 }
 
 type User struct {
-	Model    gorm.Model `gorm:"embedded"`
-	Username string
-	FirtName string
-	LastName string
+	Model     gorm.Model
+	Username  string
+	FirstName string
+	LastName  string
 }
 
 var users = []User{
-	User{Username: "iamsaitam", FirtName: "Ricardo", LastName: "Matias"},
-	User{Username: "batman", FirtName: "Bruce", LastName: "Wayne"},
-	User{Username: "superman", FirtName: "Clark", LastName: "Kent"},
+	User{Username: "iamsaitam", FirstName: "Ricardo", LastName: "Matias"},
+	User{Username: "batman", FirstName: "Bruce", LastName: "Wayne"},
+	User{Username: "superman", FirstName: "Clark", LastName: "Kent"},
 }
