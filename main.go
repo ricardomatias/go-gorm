@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
 )
@@ -18,26 +16,28 @@ func main() {
 	db.DropTable(&User{})
 	db.CreateTable(&User{})
 
-	for _, user := range users {
-		db.Create(&user)
-	}
+	// for _, user := range users {
+	// 	db.Create(&user)
+	// }
 
-	u := User{Username: "superman"}
+	// u := User{Username: "superman"}
 
-	db.Where(&u).First(&u)
+	// db.Where(&u).First(&u)
 
-	u.LastName = "Can"
+	// u.LastName = "Can"
 
-	db.Save(&u)
+	// db.Save(&u)
 
-	fmt.Println(users)
+	// fmt.Println(users)
 }
 
 type User struct {
-	ID       uint
-	Username string
-	FirtName string
-	LastName string
+	gorm.Model
+	Username  string `sql:"type:VARCHAR(15);not null"`
+	FirtName  string `sql:"size:100;not null"`
+	LastName  string `sql:"unique;unique_index;not null;DEFAULT:'Smith'"`
+	Count     int    `gorm:"AUTO_INCREMENT"`
+	TempField bool   `sql:"-"`
 }
 
 var users = []User{
