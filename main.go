@@ -16,28 +16,16 @@ func main() {
 	db.DropTable(&User{})
 	db.CreateTable(&User{})
 
-	// for _, user := range users {
-	// 	db.Create(&user)
-	// }
-
-	// u := User{Username: "superman"}
-
-	// db.Where(&u).First(&u)
-
-	// u.LastName = "Can"
-
-	// db.Save(&u)
-
-	// fmt.Println(users)
+	for _, field := range db.NewScope(&User{}).Fields() {
+		println(field.Name)
+	}
 }
 
 type User struct {
 	gorm.Model
-	Username  string `sql:"type:VARCHAR(15);not null"`
-	FirtName  string `sql:"size:100;not null"`
-	LastName  string `sql:"unique;unique_index;not null;DEFAULT:'Smith'"`
-	Count     int    `gorm:"AUTO_INCREMENT"`
-	TempField bool   `sql:"-"`
+	Username string
+	FirtName string
+	LastName string
 }
 
 var users = []User{
