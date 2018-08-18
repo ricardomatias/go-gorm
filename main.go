@@ -22,7 +22,7 @@ func main() {
 }
 
 type User struct {
-	gorm.Model
+	Model    gorm.Model `gorm:"embedded"`
 	Username string
 	FirtName string
 	LastName string
